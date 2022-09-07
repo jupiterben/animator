@@ -1,5 +1,5 @@
-import * as protobuf from "protobufjs";
-import protoFile from "url:./a.proto";
+import * as ProtoBuf from "protobufjs";
+import protoFile from "url:./static/a.proto";
 import { AnimatorView } from "./View";
 
 class App {
@@ -11,7 +11,7 @@ class App {
         this.view.render();
     }
 
-    static jsObject2Buffer(protoType: protobuf.Type, payload: any) {
+    static jsObject2Buffer(protoType: ProtoBuf.Type, payload: any) {
         // Verify the payload if necessary (i.e. when possibly incomplete or invalid)
         var errMsg = protoType.verify(payload);
         if (errMsg) throw Error(errMsg);
@@ -21,7 +21,7 @@ class App {
         return protoType.encode(message).finish();
     }
 
-    static buffer2jsObject(protoType: protobuf.Type, buffer: Uint8Array) {
+    static buffer2jsObject(protoType: ProtoBuf.Type, buffer: Uint8Array) {
         // Decode an Uint8Array (browser) or Buffer (node) to a message
         var message = protoType.decode(buffer);
         // ... do something with message
@@ -37,7 +37,7 @@ class App {
     async loadData() {
         var response = await fetch(protoFile);
         var content = await response.text();
-        var parseResult = await protobuf.parse(content);
+        var parseResult = await ProtoBuf.parse(content);
         var root = parseResult.root;
         var meshArrayType = root.lookupType("MayaLiveProto.VertexChannel");
         try {
@@ -51,7 +51,7 @@ class App {
             var backObj = App.buffer2jsObject(meshArrayType, decodedMessage);
             console.log(backObj);
         } catch (e) {
-            if (e instanceof protobuf.util.ProtocolError) {
+            if (e instanceof ProtoBuf.util.ProtocolError) {
                 // e.instance holds the so far decoded message with missing required fields
             } else {
                 // wire format is invalid

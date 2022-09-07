@@ -1,40 +1,30 @@
-import { render } from "react-dom";
-import * as THREE from "three";
 import { createRoot } from "react-dom/client";
-import React, { useRef, useState } from "react";
-import { Canvas, useFrame, ThreeElements } from "@react-three/fiber";
-
-function Box(props: ThreeElements["mesh"]) {
-    const mesh = useRef<THREE.Mesh>(null!);
-    const [hovered, setHover] = useState(false);
-    const [active, setActive] = useState(false);
-    useFrame((state, delta) => (mesh.current.rotation.x += 0.01));
-    return (
-        <mesh
-            {...props}
-            ref={mesh}
-            scale={active ? 1.5 : 1}
-            onClick={(event) => setActive(!active)}
-            onPointerOver={(event) => setHover(true)}
-            onPointerOut={(event) => setHover(false)}
-        >
-            <boxGeometry args={[1, 1, 1]} />
-            <meshStandardMaterial color={hovered ? "hotpink" : "orange"} />
-        </mesh>
-    );
-}
+import React, { Suspense } from "react";
+import { Canvas } from "@react-three/fiber";
+import Avatar from './Avatar'
+import { OrbitControls } from '@react-three/drei';
 
 export class AnimatorView {
-    constructor() {}
+    constructor() { }
     render() {
         const container = document.getElementById("root");
         const root = createRoot(container!);
         root.render(
-            <Canvas>
-                <ambientLight />
-                <pointLight position={[10, 10, 10]} />
-                <Box position={[-1.2, 0, 0]} />
-                <Box position={[1.2, 0, 0]} />
+            <Canvas
+                camera={{ position: [2, 0, 12.25], fov: 15 }}
+                style={{
+                    backgroundColor: '#111a21',
+                    width: '100vw',
+                    height: '100vh',
+                }}
+            >
+                <ambientLight intensity={1.25} />
+                <ambientLight intensity={0.1} />
+                <directionalLight intensity={0.4} />
+                <Suspense fallback={null}>
+                    <Avatar position={[0.025, -0.9, 0]} /> 
+                </Suspense>
+                <OrbitControls />
             </Canvas>
         );
     }
