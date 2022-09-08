@@ -10,7 +10,7 @@ import Static_AnimFile from "url:./static/ani_cover_to_stand.glb"
 export default function Model(props: any) {
   const group = useRef();
   const { nodes, materials } = useGLTF(Static_ModelFile) as any
-  const { animations } = useGLTF(Static_AnimFile) as any;
+  const { animations } = useGLTF(Static_AnimFile);
   const { actions } = useAnimations(animations, group); /* highlight-line */
 
   useEffect(() => {/* highlight-line */
@@ -81,5 +81,3 @@ export default function Model(props: any) {
   )
 }
 
-useGLTF.preload(Static_ModelFile)
-useGLTF.preload(Static_AnimFile)

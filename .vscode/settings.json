@@ -1,5 +1,6 @@
 {
     "cSpell.words": [
         "GLTF"
-    ]
+    ],
+    "explorer.excludeGitIgnore": true
 }
