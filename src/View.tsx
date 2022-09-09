@@ -1,8 +1,7 @@
 import { createRoot } from "react-dom/client";
 import React, { Suspense } from "react";
-import { Canvas } from "@react-three/fiber";
-import Avatar from './Avatar'
-import { OrbitControls } from '@react-three/drei';
+import TreeCanvas from '~ThreeCavnas';
+import BabylonCanvas from '~BabylonCanvas';
 
 export class AnimatorView {
     constructor() { }
@@ -10,22 +9,8 @@ export class AnimatorView {
         const container = document.getElementById("root");
         const root = createRoot(container!);
         root.render(
-            <Canvas
-                camera={{ position: [2, 0, 12.25], fov: 30 }}
-                style={{
-                    backgroundColor: '#111a21',
-                    width: '100vw',
-                    height: '100vh',
-                }}
-            >
-                <ambientLight intensity={1.25} />
-                <ambientLight intensity={0.1} />
-                <directionalLight intensity={0.4} />
-                <Suspense fallback={null}>
-                    <Avatar position={[0.025, -0.9, 0]} /> 
-                </Suspense>
-                <OrbitControls />
-            </Canvas>
+            <TreeCanvas />
+            <BabylonCanvas/>
         );
     }
 }
