@@ -3,7 +3,6 @@ import { Canvas } from "@react-three/fiber";
 import Avatar from './Avatar'
 import { OrbitControls } from '@react-three/drei';
 
-
 export default function TreeCanvas() {
     return (<Canvas
         camera={{ position: [2, 0, 12.25], fov: 30 }}
